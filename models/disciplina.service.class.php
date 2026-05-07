@@ -96,14 +96,30 @@ class Disciplina{
         }
     }
 
+    public function atualizar_tempo_de_estudo($param, $conexao){
+        $query = 'UPDATE disciplina 
+                SET tempo_de_estudo = tempo_de_estudo + ? 
+                WHERE id_disciplina = ?';
+
+        $statement = $conexao->prepare($query);
+        $statement->execute([
+            $param['duracao'],
+            $param['disciplina_id'],
+        ]);
+
+        return true;
+    }
+
     public function salvar_estudo($param){
         $conexao = BANCO::conectar();
+
         try {
             $conexao->beginTransaction();
 
+            // 1. Insere auditoria
             $query = 'INSERT INTO auditoria_estudo
             (id_usuario, id_disciplina, data_inicio, data_fim, duracao_segundos)
-                VALUES (?,?,?,?,?)';
+            VALUES (?,?,?,?,?)';
 
             $statement = $conexao->prepare($query);
             $statement->execute([
@@ -113,16 +129,28 @@ class Disciplina{
                 $param['tempo_final'],
                 $param['duracao']
             ]);
+
+            // 2. Atualiza disciplina (mesma conexão!)
+            $this->atualizar_tempo_de_estudo($param, $conexao);
+
+            // 3. Se tudo ok, confirma
             $conexao->commit();
-            return ['error' => false, 
-                    'msg'=>'Estudo salvo com sucesso!'];
+
+            return [
+                'error' => false,
+                'msg' => 'Estudo salvo com sucesso!'
+            ];
 
         } catch (Exception $e) {
+
             if ($conexao->inTransaction()) {
                 $conexao->rollBack();
             }
-            return ['error' => true, 
-                    'msg'=>'Erro ao salvar estudo!'];
+
+            return [
+                'error' => true,
+                'msg' => 'Erro ao salvar estudo!'
+            ];
         }
     }
 

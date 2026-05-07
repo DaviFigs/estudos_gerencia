@@ -64,7 +64,7 @@
         
     }
 ?>
-<body style="">
+<body id="body">
     <main>
         <form action="" id="form1" method="post">
             <input type="hidden" name="acao" id="acao" value="">
@@ -72,17 +72,26 @@
             <input type="hidden" name="tempo_final" id="tempo_final" value="">
             <input type="hidden" name="duracao_estudo" id="duracao_estudo">
             <input type="hidden" name="modo" id="modo" value="cron">
+            <input type="hidden" name="disciplina_id" id="disciplina_id">
+
             <div class="row">
                 <div class="container col-3">
-                    <select name="disciplina_id" id="disciplina_id">
-                        <option value="">Selecione uma disciplina</option>
-                        <?
-                            foreach($disciplinas_usuario['items'] as $disciplina)
-                            {?>
-                                <option  value="<?= $disciplina['id_disciplina'] ?>"><?= $disciplina['nome'] ?></option>
-                            <?}
-                        ?>
-                    </select>
+                    <div class="disciplinas-scroll">
+                        <? foreach($disciplinas_usuario['items'] as $disciplina){ ?>
+                            <div 
+                                class="disciplina-item"
+                                data-id="<?= $disciplina['id_disciplina'] ?>"
+                                data-cor="<?= $disciplina['cor'] ?>"
+                                style="border-left-color: <?= htmlspecialchars($disciplina['cor'] ?? '#3b82f6') ?>">
+                                
+                                <div class="disciplina-header">
+                                    <span class="disciplina-nome"><?= htmlspecialchars($disciplina['nome']) ?></span>
+                                    <?= $oTools->segundosParaHorario($disciplina['tempo_de_estudo']) ?>
+                                    <span class="disciplina-cor" style="background-color: <?= htmlspecialchars($disciplina['cor'] ?? '#3b82f6') ?>"></span>
+                                </div>
+                            </div>
+                        <? } ?>
+                    </div>
                 </div>
                 <div class="container col-6">
                     <div class="cronometro-container">
@@ -97,7 +106,7 @@
                                 id="cronometro"
                                 contenteditable="false">
                                 00:00:00
-                            </span>
+                            </span> 
                         </div>
                         <div class="cronometro-controles">
                             <button type="button" class="btn btn-cronometro btn-iniciar-pausar" id="btnIniciarPausar">▶ Iniciar</button>
@@ -107,31 +116,33 @@
                     </div>
                 </div>
                 <div class="container col-3">
-                    <h4>Últimos Estudos</h4>
-                    <?
-                        foreach($ultimos_estudos['items'] as $estudo)
-                        {
-                            $data_inicio = strtotime($estudo['data_inicio']);
-                            $data_fim = strtotime($estudo['data_fim']);
-                        ?>
-                            <div class="estudo-item">
-                                <div class="estudo-header">
-                                    <span class="estudo-nome"><?= htmlspecialchars($estudo['nome']) ?></span>
-                                    <span class="estudo-data"><?= date('d/m/Y', $data_inicio) ?></span>
-                                </div>
-                                <div class="estudo-horarios">
-                                    <div class="horario">
-                                        <span class="time"><?= date('H:i:s', $data_inicio) ?> → <?= date('H:i:s', $data_fim) ?></span>
+                    <div class="estudos-scroll">
+                        <?
+                            foreach($ultimos_estudos['items'] as $estudo)
+                            {
+                                $data_inicio = strtotime($estudo['data_inicio']);
+                                $data_fim = strtotime($estudo['data_fim']);
+                                $cor = $estudo['cor']
+                            ?>
+                                <div class="estudo-item" style="border-left:4px solid <?=$cor?>">
+                                    <div class="estudo-header">
+                                        <span class="estudo-nome"><?= htmlspecialchars($estudo['nome']) ?></span>
+                                        <span class="estudo-data" style="background-color:<?=$cor?>;"><?= date('d/m/Y', $data_inicio) ?></span>
                                     </div>
-                            
+                                    <div class="estudo-horarios">
+                                        <div class="horario">
+                                            <span class="time"><?= date('H:i:s', $data_inicio) ?> → <?= date('H:i:s', $data_fim) ?></span>
+                                        </div>
+                                
+                                    </div>
+                                    <div class="estudo-duracao" style="background: linear-gradient(135deg, <?=$cor?> 0%, <?=$cor?> 100%);">
+                                        <span class="duracao-label">Duração:</span>
+                                        <span class="duracao-valor"><?= $oTools->segundosParaHorario($estudo['duracao_segundos']) ?></span>
+                                    </div>
                                 </div>
-                                <div class="estudo-duracao">
-                                    <span class="duracao-label">Duração:</span>
-                                    <span class="duracao-valor"><?= $oTools->segundosParaHorario($estudo['duracao_segundos']) ?></span>
-                                </div>
-                            </div>
-                        <?}
-                    ?>
+                            <?}
+                        ?>
+                    </div>
                 </div>
             </div>
         </form>

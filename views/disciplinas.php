@@ -67,16 +67,21 @@
 ?>
 <body>
     <main>
+        
         <div class="container-fluid">
-            <!-- Cabeçalho -->
-            <div class="mb-4">
-                <h1>👋 Olá, <?= $_SESSION['user_name'] ?? 'Usuário' ?></h1>
-                <p class="text-muted">Gerencie suas disciplinas de estudo</p>
+            
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body text-center py-4">
+                    <h3 class="mb-2 fw-semibold text-primary">
+                        Gerencie suas disciplinas
+                    </h3>
+                    <p class="mb-0 text-muted">
+                        Crie, edite e exclua disciplinas de forma simples e organizada.
+                    </p>
+                </div>
             </div>
-
-            <!-- Botão Nova Disciplina -->
-            <button class="btn btn-nova-disciplina mb-4" data-bs-toggle="modal" data-bs-target="#modalDisciplina">
-                <i class="bi bi-plus-circle"></i> Nova Disciplina
+            <button class="btn btn-primary btn-lg rounded-3 mb-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalDisciplina">
+                <i class="bi bi-plus-circle me-1"></i> Nova Disciplina
             </button>
 
             <!-- Grid de Cards -->
@@ -103,7 +108,7 @@
                             </span>
                             
                             <div class="tempo-estudo">
-                                ⏱️ <?= htmlspecialchars($disciplina['tempo_de_estudo'] ?? 'Não informado') ?>
+                                ⏱️ <?= $oTools->segundosParaHorario($disciplina['tempo_de_estudo']) ?>
                             </div>
                         </div>
                     </div>

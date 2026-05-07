@@ -14,16 +14,16 @@ var $tempo_final = $("#tempo_final");
 
 var $duracao_estudo = $("#duracao_estudo");
 var $btnSalvarEstudo = $("#btnSalvarEstudo");
-
+var $disciplina_item = $(".disciplina-item")
 var primeira_vez = true;
 var rodando = false;
 var intervalo;
 var tempoAtual = 0;
 var tempoInicialTemporizador = 0;
 
-$(document).ready(function() {
-    console.log(dataHoraLocal());
 
+
+$(document).ready(function() {
     let tempoDigitado = '000000';
 
 
@@ -199,6 +199,31 @@ $(document).ready(function() {
         $tempo_final.val(dataHoraLocal());
         $acao.val("salvar_estudo");
         $form1.submit();
+
+    });
+
+    $disciplina_item.on('click', function(){
+
+        if(rodando != true && primeira_vez == true){
+
+            $disciplina_item.removeClass('ativa');
+
+            $(this).addClass('ativa');
+
+            let id = $(this).data('id');
+
+            let cor = $(this).data('cor');
+            $("#body").css("background-color", cor);
+            $(".cronometro-display").css(
+                "background",
+                `linear-gradient(135deg, ${cor} 100%, #ffffff 100%)`
+            );
+
+            $btnSalvarEstudo.css("background-color", cor);
+
+            $disciplina_id.val(id);
+
+        }
 
     });
 

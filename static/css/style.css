@@ -10,7 +10,7 @@ body {
 
 
 .header{
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
     color: #fff;
     margin: 0px;
     padding: 20px;
@@ -316,8 +316,8 @@ main h1 {
 
 /* Container da esquerda (Disciplinas) */
 .row .container.col-3:first-child {
-    background: linear-gradient(135deg, #92939615 0%, #5a4b6815 100%);
-    border: 0px solid #d0d6f0;
+    background-color: rgba(255, 255, 255, 0.288);
+    border: 0px solid #afb1b8;
 }
 
 .row .container.col-3:first-child select {
@@ -344,7 +344,7 @@ main h1 {
 
 /* Container da direita (Últimos Estudos) */
 .row .container.col-3:last-child {
-    background: linear-gradient(135deg, #92939615 0%, #5a4b6815 100%);
+    background-color: rgba(255, 255, 255, 0.288);
     border: 0px solid #b0bbec;
 }
 
@@ -353,14 +353,13 @@ main h1 {
     font-weight: 700;
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #667eea;
     font-size: 1.2rem;
+    border-bottom: none;
 }
-
 /* Items de estudo */
 .estudo-item {
     background: white;
-    border-left: 4px solid #764ba2;
+    border-left: 4px solid #0ea5e9;
     padding: 12px;
     margin-bottom: 12px;
     border-radius: 6px;
@@ -369,7 +368,7 @@ main h1 {
 }
 
 .estudo-item:hover {
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
     transform: translateX(4px);
 }
 
@@ -390,7 +389,7 @@ main h1 {
 }
 
 .estudo-data {
-    background-color: #667eea;
+    background-color: #9c9da0;
     color: white;
     padding: 4px 10px;
     border-radius: 20px;
@@ -426,9 +425,9 @@ main h1 {
 }
 
 .horario .time {
-    font-family: 'Courier New', monospace;
+    font-family:monospace;
     font-weight: 700;
-    color: #764ba2;
+    color: #000000;
     font-size: 0.85rem;
 }
 
@@ -444,13 +443,13 @@ main h1 {
     align-items: center;
     justify-content: space-between;
     padding: 8px 10px;
-    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    background: linear-gradient(135deg, #3b82f615 0%, #0ea5e915 100%);
     border-radius: 4px;
-    border-left: 3px solid #667eea;
+    border-left: 3px solid #ffffff;
 }
 
 .duracao-label {
-    color: #666;
+    color: #ffffff;
     font-weight: 600;
     font-size: 0.8rem;
 }
@@ -458,7 +457,7 @@ main h1 {
 .duracao-valor {
     font-family: 'Courier New', monospace;
     font-weight: 700;
-    color: #667eea;
+    color: #ffffff;
     font-size: 0.9rem;
 }
 
@@ -487,4 +486,57 @@ main h1 {
         padding: 10px 20px;
         font-size: 0.9rem;
     }
+}
+
+
+#btnCronometro,
+#btnTemporizador{
+    border:none;
+    border-radius:12px;
+    padding:10px 18px;
+    font-weight:600;
+    font-size:0.95rem;
+    transition:all 0.2s ease;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* CRONÔMETRO */
+#btnCronometro{
+    background:#eef2ff;
+    color:#374151;
+}
+
+#btnCronometro:hover{
+    background:#dbeafe;
+    transform:translateY(-1px);
+}
+
+/* TEMPORIZADOR */
+#btnTemporizador{
+    background:#f5f3ff;
+    color:#4b5563;
+}
+
+#btnTemporizador:hover{
+    background:#ede9fe;
+    transform:translateY(-1px);
+}
+
+/* BOTÃO DESABILITADO */
+#btnCronometro:disabled,
+#btnTemporizador:disabled{
+    opacity:1;
+    cursor:default;
+    box-shadow:0 0 0 2px rgba(255,255,255,0.25) inset;
+}
+
+/* destaque do botão ativo */
+#btnCronometro:disabled{
+    background:#c7c7ca;
+    color:#000000;
+}
+
+#btnTemporizador:disabled{
+    background:#c7c7ca;
+    color:#000000;
 }

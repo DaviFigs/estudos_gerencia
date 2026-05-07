@@ -18,7 +18,6 @@
     
     $titulo = 'Cadastro';
     include BASE_PATH . 'base/head.php';
-    include BASE_PATH . 'base/header.php';
     
     $acao = $_POST['acao'] ?? '';
 
@@ -51,30 +50,41 @@
 ?>
 <body>
     <main>
-        
-            <div class="container center col-6 espaco-top">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Cadastro</h1>
+                    <p>Crie sua conta e comece a estudar</p>
+                </div>
+
                 <form action="" method="POST" id="form1">
-                    <input type="hidden" name="acao" value="" id="acao">
-                    <div class="mb-3">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="button" class="btn btn-success"  id="btnCadastro">Cadastrar</button>
+                    <input type="hidden" name="acao" id="acao" value="">
                     
-                    <a href="login.php">
-                        <button type="button" class="btn btn-info">Já tenho conta</button>
-                    </a>
+                    <div class="form-group">
+                        <label for="nome" class="form-label">Nome Completo</label>
+                        <input type="text" class="form-input" id="nome" name="nome" placeholder="Seu nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-input" id="email" name="email" placeholder="seu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" class="form-input" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="button" class="btn btn-auth btn-primary" id="btnCadastro">
+                        ✓ Cadastrar
+                    </button>
                 </form>
+
+                <div class="auth-footer">
+                    <p>Já tem conta? <a href="login.php" class="auth-link">Faça login aqui</a></p>
+                </div>
             </div>
-        
+        </div>
     </main>
 </body>
 </html>

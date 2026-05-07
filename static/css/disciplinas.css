@@ -1,0 +1,159 @@
+/* ===== DISCIPLINAS ===== */
+
+/* Container scrollável das disciplinas */
+.disciplinas-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: calc(100vh - 350px);
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+
+/* Scrollbar customizada */
+.disciplinas-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.disciplinas-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.disciplinas-scroll::-webkit-scrollbar-thumb {
+    background: #afb1b3;
+    border-radius: 4px;
+}
+
+.disciplinas-scroll::-webkit-scrollbar-thumb:hover {
+    background: #75797a;
+}
+
+/* Cards de disciplinas */
+.disciplina-item {
+    background: white;
+    border-left: 4px solid #3b82f6;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.disciplina-item:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    transform: translateX(4px);
+    background-color: #f9fafb;
+}
+
+.disciplina-item{
+    cursor:pointer;
+    border-left:5px solid transparent;
+    padding:12px;
+    border-radius:10px;
+    transition:0.2s;
+}
+
+.disciplina-item.ativa{
+    background:#e2e2e2;
+    transform:scale(0.95);
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.disciplina-item:active {
+    transform: translateX(2px);
+}
+
+/* Header da disciplina */
+.disciplina-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-family: monospace;
+}
+
+.disciplina-nome {
+    color: #333;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex: 1;
+    word-break: break-word;
+}
+
+/* Ponto colorido da disciplina */
+.disciplina-cor {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Scroll também para os últimos estudos */
+.row .container.col-3:last-child {
+    background-color: rgba(255, 255, 255, 0.288);
+    border: 0px solid;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.row .container.col-3:last-child h4 {
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    font-size: 1.2rem;
+    border-bottom: none;
+}
+
+/* Container de estudos com scroll */
+.estudos-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    padding-right: 8px;
+    max-height: 70vh;
+}
+
+.estudos-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.estudos-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.estudos-scroll::-webkit-scrollbar-thumb {
+    background: #afb1b3;
+    border-radius: 4px;
+}
+
+.estudos-scroll::-webkit-scrollbar-thumb:hover {
+    background: #75797a;
+}
+
+/* Responsivo */
+@media (max-width: 992px) {
+    .disciplinas-scroll,
+    .estudos-scroll {
+        height: auto;
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .disciplinas-scroll,
+    .estudos-scroll {
+        height: auto;
+        max-height: 250px;
+    }
+    
+    .disciplina-nome {
+        font-size: 0.85rem;
+    }
+}
