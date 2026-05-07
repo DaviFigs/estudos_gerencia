@@ -69,6 +69,58 @@ class Disciplina{
         }
     }
 
+    public function listar_ultimos_estudos($param)
+    {
+        try{
+            $conexao = BANCO::conectar();
+            $query = 'SELECT disciplina.nome, auditoria_estudo.dia_hora_inicio, 
+            auditoria_estudo.dia_hora_fim FROM auditoria_estudo 
+            JOIN disciplina ON auditoria_estudo.id_disciplina = disciplina.id_disciplina 
+            WHERE auditoria_estudo.id_usuario = ? 
+            ORDER BY auditoria_estudo.   dia_hora_fim DESC LIMIT 10';
+            $statement = $conexao->prepare($query);
+            $statement->execute([$param['id_usuario']]);
+            $items = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'items' => $items,
+                'total' => count($items),
+                'error' => false
+            ];
+        }
+        catch(Exception $e){
+            return [
+                'items' => [],
+                'total' => 0,
+                'error' => true
+            ];
+        }
+    }
+
+    public function salvar_estudo($param){
+        $conexao = BANCO::conectar();
+        try {
+            $conexao->beginTransaction();
+
+            $query = 'INSERT INTO auditoria_estudo (id_usuario, id_disciplina, dia_hora_inicio, dia_hora_fim)
+                VALUES (?,?,?,?)';
+
+            $statement = $conexao->prepare($query);
+            $statement->execute([
+                $param['id_usuario'],
+                $param['id_disciplina'],
+                $param['dia_hora_inicio'],
+                $param['dia_hora_fim']
+            ]);
+            $conexao->commit();
+            return true;
+
+        } catch (Exception $e) {
+            if ($conexao->inTransaction()) {
+                $conexao->rollBack();
+            }
+            return false;
+        }
+    }
 
     public function criar_disciplina($param)
     {
