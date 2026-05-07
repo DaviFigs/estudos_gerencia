@@ -7,12 +7,22 @@ var $btnParar = $('#btnParar');
 var $modo = $('#modo');
 var $btnTemporizador = $('#btnTemporizador');
 var $btnCronometro = $('#btnCronometro');
+var $disciplina_id = $("#disciplina_id");
+var $tempo_inicial = $("#tempo_inicial");
+var $tempo_final = $("#tempo_final");
 
+
+var $duracao_estudo = $("#duracao_estudo");
+var $btnSalvarEstudo = $("#btnSalvarEstudo");
+
+var primeira_vez = true;
 var rodando = false;
 var intervalo;
 var tempoAtual = 0;
+var tempoInicialTemporizador = 0;
 
 $(document).ready(function() {
+    console.log(dataHoraLocal());
 
     let tempoDigitado = '000000';
 
@@ -107,8 +117,23 @@ $(document).ready(function() {
     // =========================
     $btnIniciarPausar.on('click', function() {
 
-        if(rodando === false){
+        if(primeira_vez == true){
 
+            $tempo_inicial.val(dataHoraLocal());
+
+            primeira_vez = false;
+
+        }
+
+        if(rodando === false){
+            if($disciplina_id.val() == ''){
+                alert('Selecione uma disciplina para estudar primeiro');
+                return false;
+            }
+            $disciplina_id.prop("disabled", true);
+            $btnCronometro.prop("disabled", true);
+            $btnTemporizador.prop("disabled", true);
+            $btnSalvarEstudo.prop("disabled", true);
             rodando = true;
 
             // muda texto
@@ -124,12 +149,10 @@ $(document).ready(function() {
                 iniciarTemporizador();
 
             }
-
         }
         else{
-
             pausarCronometro();
-
+            $btnSalvarEstudo.prop("disabled", false);
             // muda texto
             $btnIniciarPausar.text('▶ Continuar');
 
@@ -137,19 +160,45 @@ $(document).ready(function() {
 
     });
 
-
     // =========================
     // PARAR
     // =========================
     $btnParar.on('click', function() {
 
-        let confirmar = confirm('Deseja realmente parar o cronômetro?');
+        let confirmar = confirm('Deseja realmente parar o cronômetro? \nSe parar o cronômetro todo progresso será perdido');
 
-        if(confirmar){
-
+        if(confirmar)
+        {
             pararCronometro();
+            window.location.href = window.location.pathname;
+        }
+
+    });
+
+    $btnSalvarEstudo.on("click", function(){
+
+        let duracaoEstudo = 0;
+
+        // CRONÔMETRO
+        if($modo.val() == 'cron'){
+
+            duracaoEstudo = tempoAtual;
 
         }
+
+        // TEMPORIZADOR
+        else{
+
+            duracaoEstudo = tempoInicialTemporizador - tempoAtual;
+
+        }
+
+        // envia para input hidden
+        $disciplina_id.prop("disabled", false);
+        $duracao_estudo.val(duracaoEstudo);
+        $tempo_final.val(dataHoraLocal());
+        $acao.val("salvar_estudo");
+        $form1.submit();
 
     });
 
@@ -187,7 +236,6 @@ $(document).ready(function() {
 
     }
 
-
     function iniciarCronometro() {
 
         clearInterval(intervalo);
@@ -215,14 +263,39 @@ $(document).ready(function() {
 
         tempoAtual = (horas * 3600) + (minutos * 60) + segundos;
 
+        // guarda tempo inicial
+        tempoInicialTemporizador = tempoAtual;
+
         intervalo = setInterval(function(){
 
+            // terminou
             if(tempoAtual <= 0){
 
-                pararCronometro();
+            tempoAtual = 0;
 
-                return;
-            }
+            atualizarDisplaySegundos(0);
+
+            // simula pausa
+            $btnIniciarPausar.click();
+
+            Swal.fire({
+                title: 'Tempo finalizado!',
+                text: 'Seu estudo foi concluído com sucesso.',
+                icon: 'success',
+                confirmButtonText: 'Salvar estudo'
+            }).then((result) => {
+
+                if(result.isConfirmed){
+
+                    // simula clique no botão salvar
+                    $btnSalvarEstudo.click();
+
+                }
+
+            });
+
+            return;
+        }
 
             tempoAtual--;
 
@@ -234,11 +307,8 @@ $(document).ready(function() {
 
 
     function pausarCronometro() {
-
         clearInterval(intervalo);
-
         rodando = false;
-
     }
 
 
@@ -256,5 +326,18 @@ $(document).ready(function() {
         $btnIniciarPausar.text('▶ Iniciar');
 
     }
+
+    function dataHoraLocal() {
+
+    let agora = new Date();
+
+    return agora.getFullYear() + '-' +
+        String(agora.getMonth() + 1).padStart(2, '0') + '-' +
+        String(agora.getDate()).padStart(2, '0') + ' ' +
+        String(agora.getHours()).padStart(2, '0') + ':' +
+        String(agora.getMinutes()).padStart(2, '0') + ':' +
+        String(agora.getSeconds()).padStart(2, '0');
+
+}
 
 });

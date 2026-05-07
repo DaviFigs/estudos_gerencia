@@ -5,8 +5,9 @@
 }
 
 body {
-    background-color: #f8f9fa;
+    background-color: #89baeb;
 }
+
 
 .header{
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -315,8 +316,8 @@ main h1 {
 
 /* Container da esquerda (Disciplinas) */
 .row .container.col-3:first-child {
-    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-    border: 2px solid #667eea;
+    background: linear-gradient(135deg, #92939615 0%, #5a4b6815 100%);
+    border: 0px solid #d0d6f0;
 }
 
 .row .container.col-3:first-child select {
@@ -343,8 +344,8 @@ main h1 {
 
 /* Container da direita (Últimos Estudos) */
 .row .container.col-3:last-child {
-    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-    border: 2px solid #667eea;
+    background: linear-gradient(135deg, #92939615 0%, #5a4b6815 100%);
+    border: 0px solid #b0bbec;
 }
 
 .row .container.col-3:last-child h4 {
@@ -360,7 +361,7 @@ main h1 {
 .estudo-item {
     background: white;
     border-left: 4px solid #764ba2;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 12px;
     border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
@@ -369,20 +370,96 @@ main h1 {
 
 .estudo-item:hover {
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-    transform: translateX(5px);
+    transform: translateX(4px);
 }
 
-.estudo-item strong {
-    color: #667eea;
-    display: block;
-    margin-bottom: 8px;
-    font-size: 0.95rem;
+/* Header do item (Nome + Data) */
+.estudo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 
-.estudo-item {
+.estudo-nome {
+    color: #333;
+    font-weight: 700;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.estudo-data {
+    background-color: #667eea;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Horários */
+.estudo-horarios {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.horario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.horario .label {
+    font-size: 0.7rem;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.horario .time {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #764ba2;
     font-size: 0.85rem;
+}
+
+.divisor {
+    color: #ddd;
+    margin: 0 8px;
+    font-size: 1.2rem;
+}
+
+/* Duração */
+.estudo-duracao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 4px;
+    border-left: 3px solid #667eea;
+}
+
+.duracao-label {
     color: #666;
-    line-height: 1.6;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.duracao-valor {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #667eea;
+    font-size: 0.9rem;
 }
 
 /* Responsivo */

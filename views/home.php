@@ -5,10 +5,12 @@
     require_once BASE_PATH . 'models/disciplina.service.class.php';
     require_once BASE_PATH . 'models/usuario.service.class.php';
     require_once BASE_PATH . 'models/auth.service.class.php';
+    require_once BASE_PATH . 'tools.php';
     
     $oUsuario = new Usuario();
     $oDiscplina = new Disciplina();
     $oAuth = new Auth();
+    $oTools = new Tools();
     
     $oAuth->requireLogin();
     $mostrar_msg = [
@@ -21,6 +23,8 @@
     $titulo = 'Home';
     include BASE_PATH . 'base/head.php';
     include BASE_PATH . 'base/header.php';
+
+    
     
     $param['id_usuario'] = $_SESSION['user_id'];
         
@@ -30,15 +34,43 @@
 
     $acao = $_POST['acao'] ?? '';
 
-    if($acao == 'buscar_disciplinas'){
+    if($acao == 'salvar_estudo')
+    {
+        $param['disciplina_id'] = $_POST['disciplina_id'];
+        $param['id_usuario'] = $_SESSION['user_id'];
+        $param['duracao'] = $_POST['duracao_estudo'];
+        $param['tempo_inicial'] = $_POST['tempo_inicial'];
+        $param['tempo_final'] = $_POST['tempo_final'];
+
+
+        $resultadoDisciplina = $oDiscplina->salvar_estudo($param);
+
+        if($resultadoDisciplina['error'] ==  true){
+            $mostrar_msg = [
+                'tipo' => 'error',
+                'title' => 'Erro',
+                'msg' => $resultadoDisciplina['msg'],
+                'acao' => 'renew'
+            ]; 
+        }
+        else{
+            $mostrar_msg = [
+                'tipo' => 'success',
+                'title' => 'Sucesso',
+                'msg' => $resultadoDisciplina['msg'],
+                'acao' => 'renew'
+            ]; 
+        }
         
     }
 ?>
-<body>
+<body style="">
     <main>
-        <form action="" id="form1">
+        <form action="" id="form1" method="post">
             <input type="hidden" name="acao" id="acao" value="">
             <input type="hidden" name="tempo_inicial" id="tempo_inicial" value="">
+            <input type="hidden" name="tempo_final" id="tempo_final" value="">
+            <input type="hidden" name="duracao_estudo" id="duracao_estudo">
             <input type="hidden" name="modo" id="modo" value="cron">
             <div class="row">
                 <div class="container col-3">
@@ -47,7 +79,7 @@
                         <?
                             foreach($disciplinas_usuario['items'] as $disciplina)
                             {?>
-                                <option value="<?= $disciplina['id_disciplina'] ?>"><?= $disciplina['nome'] ?></option>
+                                <option  value="<?= $disciplina['id_disciplina'] ?>"><?= $disciplina['nome'] ?></option>
                             <?}
                         ?>
                     </select>
@@ -56,7 +88,7 @@
                     <div class="cronometro-container">
                         <div class="row">
                             <div class="col-12">
-                                <button type="button" class="btn btn-info" id="btnCronometro">Cronômetro</button>
+                                <button disabled type="button" class="btn btn-info" id="btnCronometro">Cronômetro</button>
                                 <button type="button" class="btn btn-primary" id="btnTemporizador">Temporizador</button>
                             </div>
                         </div>
@@ -71,18 +103,32 @@
                             <button type="button" class="btn btn-cronometro btn-iniciar-pausar" id="btnIniciarPausar">▶ Iniciar</button>
                             <button type="button" class="btn btn-cronometro btn-parar" id="btnParar">⏹ Parar</button>
                         </div>
+                        <button disabled type="button" class="btn btn-success" id="btnSalvarEstudo">Salvar Estudo</button>
                     </div>
                 </div>
                 <div class="container col-3">
                     <h4>Últimos Estudos</h4>
                     <?
                         foreach($ultimos_estudos['items'] as $estudo)
-                        {?>
+                        {
+                            $data_inicio = strtotime($estudo['data_inicio']);
+                            $data_fim = strtotime($estudo['data_fim']);
+                        ?>
                             <div class="estudo-item">
-                                <strong><?= $estudo['nome'] ?></strong><br>
-                                Início: <?= date('d/m/Y H:i:s', strtotime($estudo['dia_hora_inicio'])) ?><br>
-                                Fim: <?= date('d/m/Y H:i:s', strtotime($estudo['dia_hora_fim'])) ?><br>
-                                Duração: <?= gmdate('H:i:s', strtotime($estudo['dia_hora_fim']) - strtotime($estudo['dia_hora_inicio'])) ?>
+                                <div class="estudo-header">
+                                    <span class="estudo-nome"><?= htmlspecialchars($estudo['nome']) ?></span>
+                                    <span class="estudo-data"><?= date('d/m/Y', $data_inicio) ?></span>
+                                </div>
+                                <div class="estudo-horarios">
+                                    <div class="horario">
+                                        <span class="time"><?= date('H:i:s', $data_inicio) ?> → <?= date('H:i:s', $data_fim) ?></span>
+                                    </div>
+                            
+                                </div>
+                                <div class="estudo-duracao">
+                                    <span class="duracao-label">Duração:</span>
+                                    <span class="duracao-valor"><?= $oTools->segundosParaHorario($estudo['duracao_segundos']) ?></span>
+                                </div>
                             </div>
                         <?}
                     ?>

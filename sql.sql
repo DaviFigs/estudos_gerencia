@@ -12,8 +12,14 @@ create table auditoria_estudo(
 	id_auditoria_estudo serial primary key,
 	id_usuario int not null,
 	id_disciplina int not null,
-	dia_hora_inicio timestamp not null,
-	dia_hora_fim timestamp not null,
+
+	duracao_segundos bigint not null check(duracao_segundos > 0),
+
+	data_inicio timestamp,
+	data_fim timestamp not null,
+
+	criado_em timestamp default current_timestamp,
+
 	foreign key(id_disciplina) references disciplina(id_disciplina),
 	foreign key(id_usuario) references usuario(id_usuario)
 );

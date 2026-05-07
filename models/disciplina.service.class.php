@@ -73,11 +73,11 @@ class Disciplina{
     {
         try{
             $conexao = BANCO::conectar();
-            $query = 'SELECT disciplina.nome, auditoria_estudo.dia_hora_inicio, 
-            auditoria_estudo.dia_hora_fim FROM auditoria_estudo 
+            $query = 'SELECT disciplina.nome,disciplina.cor, auditoria_estudo.data_inicio, 
+            auditoria_estudo.data_fim, auditoria_estudo.duracao_segundos FROM auditoria_estudo 
             JOIN disciplina ON auditoria_estudo.id_disciplina = disciplina.id_disciplina 
             WHERE auditoria_estudo.id_usuario = ? 
-            ORDER BY auditoria_estudo.   dia_hora_fim DESC LIMIT 10';
+            ORDER BY auditoria_estudo.data_fim DESC LIMIT 10';
             $statement = $conexao->prepare($query);
             $statement->execute([$param['id_usuario']]);
             $items = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -101,24 +101,28 @@ class Disciplina{
         try {
             $conexao->beginTransaction();
 
-            $query = 'INSERT INTO auditoria_estudo (id_usuario, id_disciplina, dia_hora_inicio, dia_hora_fim)
-                VALUES (?,?,?,?)';
+            $query = 'INSERT INTO auditoria_estudo
+            (id_usuario, id_disciplina, data_inicio, data_fim, duracao_segundos)
+                VALUES (?,?,?,?,?)';
 
             $statement = $conexao->prepare($query);
             $statement->execute([
                 $param['id_usuario'],
-                $param['id_disciplina'],
-                $param['dia_hora_inicio'],
-                $param['dia_hora_fim']
+                $param['disciplina_id'],
+                $param['tempo_inicial'],
+                $param['tempo_final'],
+                $param['duracao']
             ]);
             $conexao->commit();
-            return true;
+            return ['error' => false, 
+                    'msg'=>'Estudo salvo com sucesso!'];
 
         } catch (Exception $e) {
             if ($conexao->inTransaction()) {
                 $conexao->rollBack();
             }
-            return false;
+            return ['error' => true, 
+                    'msg'=>'Erro ao salvar estudo!'];
         }
     }
 
