@@ -7,8 +7,6 @@ class BANCO {
         try {
 
             $url = $_ENV['DATABASE_URL'];
-
-            // quebra a URL do Supabase
             $db = parse_url($url);
 
             $host = $db['host'];
@@ -16,7 +14,10 @@ class BANCO {
             $pass = $db['pass'];
             $dbname = ltrim($db['path'], '/');
 
-            $dsn = "pgsql:host=$host;port=5432;dbname=$dbname;sslmode=require";
+            // 🔥 FORÇA IPv4 resolvendo DNS manualmente
+            $ip = gethostbyname($host);
+
+            $dsn = "pgsql:host=$ip;port=5432;dbname=$dbname;sslmode=require";
 
             $con = new PDO($dsn, $user, $pass, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
