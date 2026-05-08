@@ -1,2 +1,3 @@
 phpConfig.php
-models/banco.service.class.php
+.env
+/vendor
