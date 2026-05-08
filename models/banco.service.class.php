@@ -6,10 +6,10 @@ class BANCO {
     static function conectar() {
         try {
 
-            $host = $_ENV['DB_HOST'];
-
             $con = new PDO(
-                'pgsql:dbname=' . $_ENV['DB_NAME'] . ';host=' . $host,
+                'pgsql:host=' . $_ENV['DB_HOST'] .
+                ';port=5432;dbname=' . $_ENV['DB_NAME'] .
+                ';sslmode=require',
                 $_ENV['DB_USER'],
                 $_ENV['DB_PASS']
             );
