@@ -6,13 +6,7 @@ class BANCO {
     static function conectar() {
         try {
 
-            // 🔥 IPv6 precisa de colchetes no host
-            $host = $_ENV['DB_HOST'];
-
-            // se já não tiver colchetes, adiciona
-            if (strpos($host, '[') === false) {
-                $host = '[' . $host . ']';
-            }
+            $host = '[' . $_ENV['DB_HOST'] . ']';
 
             $con = new PDO(
                 'pgsql:dbname=' . $_ENV['DB_NAME'] . ';host=' . $host,
