@@ -1,3 +1,3 @@
 <?php
-header("Location: /estudos_gerencia/views/home.php");//redioreciona para página inicial 
+header("Location: views/home.php");
 exit;
