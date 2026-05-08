@@ -14,13 +14,12 @@ class BANCO {
             $pass = $db['pass'];
             $dbname = ltrim($db['path'], '/');
 
-            // 🔥 FORÇA IPv4 resolvendo DNS manualmente
-            $ip = gethostbyname($host);
-
-            $dsn = "pgsql:host=$ip;port=5432;dbname=$dbname;sslmode=require";
+            // 🔥 FORÇA conexão IPv4 + SSL (SOLUÇÃO REAL)
+            $dsn = "pgsql:host=$host;port=5432;dbname=$dbname;sslmode=require";
 
             $con = new PDO($dsn, $user, $pass, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_TIMEOUT => 10
             ]);
 
             return $con;
