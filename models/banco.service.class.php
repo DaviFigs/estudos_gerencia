@@ -6,21 +6,21 @@ class BANCO {
     static function conectar() {
         try {
 
-            $url = $_ENV['DATABASE_URL'];
-            $db = parse_url($url);
+            // 🔥 IPv6 precisa de colchetes no host
+            $host = $_ENV['DB_HOST'];
 
-            $host = $db['host'];
-            $user = $db['user'];
-            $pass = $db['pass'];
-            $dbname = ltrim($db['path'], '/');
+            // se já não tiver colchetes, adiciona
+            if (strpos($host, '[') === false) {
+                $host = '[' . $host . ']';
+            }
 
-            // 🔥 FORÇA conexão IPv4 + SSL (SOLUÇÃO REAL)
-            $dsn = "pgsql:host=$host;port=5432;dbname=$dbname;sslmode=require";
+            $con = new PDO(
+                'pgsql:dbname=' . $_ENV['DB_NAME'] . ';host=' . $host,
+                $_ENV['DB_USER'],
+                $_ENV['DB_PASS']
+            );
 
-            $con = new PDO($dsn, $user, $pass, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_TIMEOUT => 10
-            ]);
+            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return $con;
 
@@ -29,4 +29,5 @@ class BANCO {
             return null;
         }
     }
+
 }
