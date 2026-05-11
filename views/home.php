@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require_once '../phpConfig.php';
     require_once BASE_PATH . 'models/banco.service.class.php';
     require_once BASE_PATH . 'models/disciplina.service.class.php';
