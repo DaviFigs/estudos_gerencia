@@ -147,6 +147,8 @@
             </div>
         </form>
     </main>
+
+    <?=include BASE_PATH . 'base/footer.php';?>
 </body>
 </html>
 

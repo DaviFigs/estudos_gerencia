@@ -1,6 +1,8 @@
-<footer class="footer fixed-bottom dark">
-  <div class="container">
-    <span class="text-dark">Place sticky footer content here.</span>
+<footer class="footer fixed-bottom bg-light border-top shadow-sm py-2">
+  <div class="container text-center">
+    <span class="text-muted">
+      © 2026 OrderMind 🧠 - <i>Davi Figueiredo</i>
+    </span>
   </div>
 </footer>
 

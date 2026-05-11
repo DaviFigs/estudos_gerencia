@@ -182,6 +182,8 @@
     </div>
   </div>
 </div>
+
+<?=include BASE_PATH . 'base/footer.php';?>
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

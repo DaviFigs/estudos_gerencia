@@ -77,11 +77,14 @@ class Usuario{
                 'msg' => "Senha incorreta"
                 ];
             }
-            return [
-                'item' => $usuario,
-                'error' => false,
-                'msg' => "Usuário logado com sucesso"
-            ];
+            else{
+                $this->auditar_ultimo_login($usuario);
+                return [
+                    'item' => $usuario,
+                    'error' => false,
+                    'msg' => "Usuário logado com sucesso"
+                ];
+            }
 
         } catch (Exception $e) {
             return [
@@ -91,6 +94,25 @@ class Usuario{
         }
     }
 
+
+    function auditar_ultimo_login($param){
+        $conexao = BANCO::conectar();
+        try{
+            $query = 'UPDATE usuario SET ultimo_login = NOW() where id_usuario = ?';
+            $statement = $conexao->prepare($query);
+            $statement->execute([$param['id_usuario']]);
+
+            if($statement->rowCount() > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }catch(Exception $e){
+            return false;
+        }
+    }
     function listar_usuarios(){
         $conexao = BANCO::conectar();
         try{

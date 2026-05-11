@@ -6,7 +6,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid px-3">
-    <a class="navbar-brand fw-bold" href="home.php">📚 OrderMind</a>
+    <a class="navbar-brand fw-bold" href="home.php">🧠 OrderMind</a>
 
     <button class="navbar-toggler" type="button"
       data-bs-toggle="collapse"

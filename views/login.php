@@ -31,9 +31,11 @@
         if($login['error'] === false)
         {
             $usuario = $login['item'];
+
             if (session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
             }
+
             $_SESSION['user_id'] = $usuario['id_usuario'];
             $_SESSION['user_name'] = $usuario['nome'];
             $_SESSION['user_email'] = $usuario['email'];
@@ -45,7 +47,7 @@
                 'title' => 'Sucesso',
                 'msg' => $login['msg'],
                 'acao' => 'redirect'
-            ]; 
+            ];
         }
         else 
         {
