@@ -227,6 +227,35 @@ $(document).ready(function() {
 
     });
 
+    
+    $('.navbar a').on('click', function(e) {
+
+    if (rodando === true) {
+
+        let confirmar = confirm(
+            'O cronômetro está rodando.\n\nSe sair da página, o progresso será perdido.\n\nDeseja continuar?'
+        );
+
+        if (!confirmar) {
+            e.preventDefault();
+        }
+
+    }
+
+});
+
+    window.addEventListener('beforeunload', function (e) {
+
+        if (rodando === true) {
+
+            e.preventDefault();
+            e.returnValue = '';
+
+        }
+
+    });
+    
+
 
 
     // =========================
@@ -363,6 +392,7 @@ $(document).ready(function() {
         String(agora.getMinutes()).padStart(2, '0') + ':' +
         String(agora.getSeconds()).padStart(2, '0');
 
-}
+    }
 
 });
+

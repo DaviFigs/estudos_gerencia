@@ -9,7 +9,7 @@ class BANCO {
             $con = new PDO(
                 'pgsql:host=' . $_ENV['DB_HOST'] .
                 ';port=5432;dbname=' . $_ENV['DB_NAME'] .
-                ';sslmode=require',
+                ';sslmode='.$_ENV['DB_SSLMODE'],
                 $_ENV['DB_USER'],
                 $_ENV['DB_PASS']
             );
