@@ -244,6 +244,19 @@ $(document).ready(function() {
 
 });
 
+    setInterval(function() {
+
+        if (rodando === true) {
+
+            fetch('../../heartbeat.php')
+                .catch(function(error) {
+                    console.log('Erro heartbeat:', error);
+                });
+
+        }
+
+    }, 60000); // 60000ms = 1 minuto
+
     window.addEventListener('beforeunload', function (e) {
 
         if (rodando === true) {
