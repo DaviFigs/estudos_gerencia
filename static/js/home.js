@@ -17,6 +17,7 @@ var $btnSalvarEstudo = $("#btnSalvarEstudo");
 var $disciplina_item = $(".disciplina-item")
 var primeira_vez = true;
 var rodando = false;
+var pausado = false;
 var intervalo;
 var tempoAtual = 0;
 var tempoInicialTemporizador = 0;
@@ -135,7 +136,7 @@ $(document).ready(function() {
             $btnTemporizador.prop("disabled", true);
             $btnSalvarEstudo.prop("disabled", true);
             rodando = true;
-
+            pausado = false;
             // muda texto
             $btnIniciarPausar.text('⏸ Pausar');
 
@@ -155,7 +156,6 @@ $(document).ready(function() {
             $btnSalvarEstudo.prop("disabled", false);
             // muda texto
             $btnIniciarPausar.text('▶ Continuar');
-
         }
 
     });
@@ -246,7 +246,7 @@ $(document).ready(function() {
 
     setInterval(function() {
 
-        if (rodando === true) {
+        if (rodando === true || pausado === true) {
 
             fetch('../../heartbeat.php')
                 .catch(function(error) {
@@ -376,6 +376,7 @@ $(document).ready(function() {
     function pausarCronometro() {
         clearInterval(intervalo);
         rodando = false;
+        pausado = true;
     }
 
 
