@@ -25,6 +25,10 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" href="dashboard.php">DashBoard</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" href="disciplinas.php">Disciplinas</a>
         </li>
 

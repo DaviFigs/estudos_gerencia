@@ -126,6 +126,27 @@ class Usuario{
         }
     }
 
+    function buscar_dados_usuario($param){
+        $conexao = BANCO::conectar();
+        try{
+            $query = 'select * from usuario where id_usuario = ?';
+            $statement = $conexao->prepare($query);
+            $statement->execute([$param['id_usuario']]);
+            return  [
+                'items' => $statement->fetch(),
+                'error' => false,
+                'msg' => 'Dados do usuário encontrados com sucesso'
+            ];
+
+        }catch(Exception $e){
+            error_log($e->getMessage());
+            return [    
+                'error' => true,
+                'msg' => 'Erro ao buscar dados do usuário'
+            ];
+        }
+    }
+
     function buscar_dados_por_id($id){
         $conexao = BANCO::conectar();
         try{

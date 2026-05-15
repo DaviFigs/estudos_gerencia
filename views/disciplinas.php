@@ -22,7 +22,8 @@
     ];
     
     $param_user['id_usuario'] = $_SESSION['user_id'] ?? 0;
-    $disciplinas_usuario = $oDiscplina->listar_disciplinas($param_user);
+    $disciplinas_usuario = $oDiscplina->buscar_estatiscas_disciplina_usuario($param_user);
+
 
     $titulo = 'Disciplinas';
     include BASE_PATH . 'base/head.php';
@@ -71,15 +72,12 @@
             
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body text-center py-4">
-                    <h3 class="mb-2 fw-semibold text-primary">
+                    <h3 class="mb-2 fw-semibold text-dark">
                         Gerencie suas disciplinas
                     </h3>
-                    <p class="mb-0 text-muted">
-                        Crie, edite e exclua disciplinas de forma simples e organizada.
-                    </p>
                 </div>
             </div>
-            <button class="btn btn-primary btn-lg rounded-3 mb-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalDisciplina">
+            <button class="btn btn-outline-dark btn-lg rounded-3 mb-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalDisciplina">
                 <i class="bi bi-plus-circle me-1"></i> Nova Disciplina
             </button>
 
@@ -89,14 +87,13 @@
                     if(!empty($disciplinas_usuario['items'])) {
                         foreach($disciplinas_usuario['items'] as $disciplina) {
                             $cor = $disciplina['cor'] ?? '#667eea';
-                            $importancia = strtolower($disciplina['importancia'] ?? 'baixa');
+                            $importancia = strtolower($disciplina['importancia'] ?? '1');
                 ?>
                     <div class="card card-disciplina">
                         <div class="card-header" style="background-color: <?= htmlspecialchars($cor) ?>;">
                             <h5 style="color:white;" class="card-title mb-0"><?= htmlspecialchars($oTools->formatar_nome_disciplina($disciplina['nome'])) ?></h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text"><?= htmlspecialchars($disciplina['descricao'] ?? 'Sem descrição') ?></p>
                             
                             <span class="badge-importancia badge-<?= $importancia ?>">
                                 <?php
@@ -107,7 +104,8 @@
                             </span>
                             
                             <div class="tempo-estudo">
-                                ⏱️ <?= $oTools->segundosParaHorario($disciplina['tempo_de_estudo']) ?>
+                                Tempo Estudado: <span style="color:<?=$cor?>"><?= $oTools->segundosParaHorario($disciplina['total_segundos']) ?></span><br>
+                                Tempo Médio de Estudo: <span style="color:<?=$cor?>"><?= $oTools->segundosParaHorario($disciplina['media_segundos']) ?></span>
                             </div>
                         </div>
                     </div>

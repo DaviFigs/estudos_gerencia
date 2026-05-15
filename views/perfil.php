@@ -24,6 +24,8 @@ $mostrar_msg = [
 $param_user['id_usuario'] = $_SESSION['user_id'] ?? 0;
 
 $disciplinas_usuario = $oDiscplina->listar_disciplinas($param_user);
+$estatisticas_disciplinas = $oDiscplina->buscar_estatiscas_disciplina_usuario($param_user);
+$dados_usuario = $oUsuario->buscar_dados_usuario($param_user);
 
 $titulo = 'Perfil: ' . $_SESSION['user_name'];
 

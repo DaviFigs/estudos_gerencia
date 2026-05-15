@@ -110,6 +110,29 @@ class Disciplina{
         return true;
     }
 
+    function buscar_estatiscas_disciplina_usuario($param){
+        $conexao = BANCO::conectar();
+        try{
+            $query = 'SELECT * from media_estudo_por_disciplina WHERE id_usuario = ?';
+            $statement = $conexao->prepare($query); 
+            $statement->execute([$param['id_usuario']]);
+            $items = $statement->fetchAll(PDO::FETCH_ASSOC);   
+
+            return [
+                'items' => $items,
+                'total' => count($items),
+                'error' => false
+            ];
+            
+        }
+        catch(Exception $e){
+            return [
+                'error' => true,
+                'msg' => 'Erro ao buscar estatísticas da disciplina'
+            ];
+        }
+    }
+
     public function salvar_estudo($param){
         $conexao = BANCO::conectar();
 
