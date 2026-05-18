@@ -37,12 +37,14 @@ class Disciplina{
             ]);
 
             $conexao->commit();
-            return true;
+            return ['error' => false,
+            'msg' => 'Disciplina excluída com sucesso'];
         } catch (Exception $e) {
             if ($conexao->inTransaction()) {
                 $conexao->rollBack();
             }
-            return false;
+            return ['error' => true,
+            'msg' => $e->getMessage() ?? 'Erro ao excluir disciplina'];
         }
     }
 
@@ -214,4 +216,6 @@ class Disciplina{
             ];
         }
     }
+    
+    
 }

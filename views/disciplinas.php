@@ -61,8 +61,24 @@
     }
 
     if($acao == 'excluir_disciplina') {
-        $param['id_disciplina'] = $_POST['id_disciplina'];
-        $disciplinas_usuario = $oDiscplina->excluir_disciplina($param);
+        $param['id_disciplina'] = $_POST['id_disciplina_excluir'];
+        $resultado = $oDiscplina->excluir_disciplina($param);
+
+        if($resultado['error'] === false) {
+            $mostrar_msg = [
+                'tipo' => 'success',
+                'title' => 'Sucesso',
+                'msg' => $resultado['msg'],
+                'acao' => 'renew'
+            ]; 
+        } else {
+            $mostrar_msg = [
+                'tipo' => 'error',
+                'title' => 'Erro',
+                'msg' => $resultado['msg'],
+                'acao' => 'renew'
+            ]; 
+        }
     }
 ?>
 <body>
@@ -90,8 +106,31 @@
                             $importancia = strtolower($disciplina['importancia'] ?? '1');
                 ?>
                     <div class="card card-disciplina">
-                        <div class="card-header" style="background-color: <?= htmlspecialchars($cor) ?>;">
-                            <h5 style="color:white;" class="card-title mb-0"><?= htmlspecialchars($oTools->formatar_nome_disciplina($disciplina['nome'])) ?></h5>
+                        <div class="card-header d-flex justify-content-between align-items-center"
+                            style="background-color: <?= htmlspecialchars($cor) ?>;">
+
+                            <h5 style="color:white;" class="card-title mb-0">
+                                <?= htmlspecialchars($oTools->formatar_nome_disciplina($disciplina['nome'])) ?>
+                            </h5>
+                            <div class="dropdown">
+                                <button class="btn btn-sm text-white border-0 shadow-none"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    ⋮
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    
+                                    <li>
+                                        <a href="#"
+                                            class="dropdown-item btnExcluirDisciplina"
+                                            data-id="<?= $disciplina['id_disciplina'] ?>">
+                                                🗑 Excluir
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
                         <div class="card-body">
                             
@@ -137,6 +176,8 @@
       <div class="modal-body">
         <form id="formDisciplina" method="post">
             <input type="hidden" name="acao" id="acao" value="">
+            <input type="hidden" name="id_disciplina_excluir" id="id_disciplina_excluir" value="">
+            
             <!-- Nome -->
             <div class="form-floating mb-3">
             <input type="text" name="nome_disciplina" class="form-control" id="nome_disciplina" placeholder="Nome da disciplina">
