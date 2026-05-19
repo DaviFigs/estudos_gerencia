@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/banco.service.class.php';
+require_once BASE_PATH . 'tools.php';
 
 class Usuario{
     function __get($name){
@@ -11,6 +12,8 @@ class Usuario{
 
     function cadastrar_usuario($param) 
     {
+        $oTools = new Tools();
+
         $conexao = BANCO::conectar();
         try {
             $conexao->beginTransaction();
@@ -25,14 +28,15 @@ class Usuario{
                 ];
             }
 
-            $query = 'INSERT INTO usuario (nome, email, senha)
-                VALUES (?,?,?)';
+            $query = 'INSERT INTO usuario (nome, email, senha, url_imagem)
+                VALUES (?,?,?,?)';
 
             $statement = $conexao->prepare($query);
             $statement->execute([
                 $param['nome'],
                 $param['email'],
-                $this->hash_senha($param['senha'])
+                $this->hash_senha($param['senha']),
+                $oTools->verificarPeriodoDia()
             ]);
 
             $conexao->commit();
