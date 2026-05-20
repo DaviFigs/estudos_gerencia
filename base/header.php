@@ -38,8 +38,10 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
         <?php if (!empty($_SESSION['logged'])): ?>
           <li class="nav-item">
-            <a href="logout.php" class="btn btn-sm btn-danger ms-2">Logout</a>
-          </li>
+            <a href="logout.php" class="nav-link text-danger fw-bold">
+                Sair
+            </a>
+        </li>
         <?php endif; ?>
       </ul>
     </div>

@@ -82,6 +82,7 @@ class Usuario{
                 ];
             }
             else{
+                $usuario['hora_acesso'] = $param['hora_acesso'];
                 $this->auditar_ultimo_login($usuario);
                 return [
                     'item' => $usuario,
@@ -102,9 +103,9 @@ class Usuario{
     function auditar_ultimo_login($param){
         $conexao = BANCO::conectar();
         try{
-            $query = 'UPDATE usuario SET ultimo_login = NOW() where id_usuario = ?';
+            $query = 'UPDATE usuario SET ultimo_login = ? where id_usuario = ?';
             $statement = $conexao->prepare($query);
-            $statement->execute([$param['id_usuario']]);
+            $statement->execute([$param['hora_acesso'], $param['id_usuario']]);
 
             if($statement->rowCount() > 0){
                 return true;

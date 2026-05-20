@@ -43,7 +43,7 @@ include BASE_PATH . 'base/header.php';
 ?>
 
 <main class="perfil-container">
-    <div class="perfil-header">
+    <div class="perfil-header" style="background: <?=$disciplinas_usuario['items'][0]['cor'] ?> ">
         <div class="avatar-section">
 
             <div class="avatar">
@@ -61,11 +61,11 @@ include BASE_PATH . 'base/header.php';
             <div class="card-section">
                 <h3>Informações Pessoais</h3>
                 <div class="info-grid">
-                    <div class="info-item">
+                    <div class="info-item" style="border-left:4px solid <?=$disciplinas_usuario['items'][0]['cor'] ?>;">
                         <label>📧 Email</label>
                         <p><?= htmlspecialchars($email) ?></p>
                     </div>
-                    <div class="info-item">
+                    <div class="info-item" style="border-left:4px solid <?=$disciplinas_usuario['items'][0]['cor'] ?>;">
                         <label>🕐 Último Login</label>
                         <p><?= $ultimo_login ? date('d/m/Y H:i:s', strtotime($ultimo_login)) : 'Nunca' ?></p>
                     </div>
@@ -76,15 +76,15 @@ include BASE_PATH . 'base/header.php';
             <div class="card-section">
                 <h3>📊 Estatísticas de Estudo</h3>
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" style="background: <?=$disciplinas_usuario['items'][0]['cor'] ?>">
                         <div class="stat-number"><?= $estatisticas_disciplinas['total'] ?></div>
                         <div class="stat-label">Disciplinas</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" style="background: <?=$disciplinas_usuario['items'][0]['cor'] ?>">
                         <div class="stat-number"><?= $total_sessoes ?></div>
                         <div class="stat-label">Sessões de Estudo</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" style="background: <?=$disciplinas_usuario['items'][0]['cor'] ?>">
                         <div class="stat-number"><?=$oTools->segundosParaHorario($total_segundos)?></div>
                         <div class="stat-label">Tempo Total</div>
                     </div>

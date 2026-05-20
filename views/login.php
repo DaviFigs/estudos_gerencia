@@ -22,8 +22,9 @@
     $acao = $_POST['acao'] ?? '';
 
     if($acao == 'login'){
-        $param['email'] = $_POST['email'] ?? '';
-        $param['senha'] = $_POST['password'] ?? '';
+        $param['email'] = $_POST['email'];
+        $param['senha'] = $_POST['password'];
+        $param['hora_acesso'] = $_POST['hora_acesso'];
         
         $login = $oUsuario->login($param);
 
@@ -71,6 +72,7 @@
 
                 <form action="" method="POST" id="form1">
                     <input type="hidden" name="acao" id="acao" value="">
+                    <input type="hidden" name="hora_acesso" id="hora_acesso" value="">
                     
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>

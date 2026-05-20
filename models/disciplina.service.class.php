@@ -52,7 +52,7 @@ class Disciplina{
     {
         try{
             $conexao = BANCO::conectar();
-            $query = 'SELECT * FROM disciplina WHERE id_usuario = ?';
+            $query = 'SELECT * FROM disciplina WHERE id_usuario = ? order by tempo_de_estudo DESC';
             $statement = $conexao->prepare($query);
             $statement->execute([$param['id_usuario']]);
             $items = $statement->fetchAll(PDO::FETCH_ASSOC);
